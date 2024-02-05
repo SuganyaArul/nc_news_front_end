@@ -1,6 +1,19 @@
 import Article from "./Article"
-
-export default function ArticlesList({articles}){
+import { getArticles } from "../utils/api"
+import {useSearchParams} from "react-router-dom"
+import { useEffect } from "react"
+export default function ArticlesList({articles,setArticles}){
+    const [searchParams]=useSearchParams()
+    const topic=searchParams.get('topic')
+    useEffect(()=>{
+        if(topic!==undefined ){
+            console.log(topic);
+        getArticles(topic).then((body)=>{
+            console.log(body,'response');
+            setArticles(body)
+        })
+    }
+},[])
     return(
         <ol>
         { articles.length!==0?(

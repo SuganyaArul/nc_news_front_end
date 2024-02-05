@@ -46,7 +46,14 @@
     background-color: red;
     padding: 2px;
     margin: 2px;
+    color:white;
 }
 .App{
     background-color: aquamarine;
+}
+.comment{
+    border:1px solid red;
+    color:white;
+    background-color: red;
+    border-radius: 10px;
 }

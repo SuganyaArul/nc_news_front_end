@@ -16,3 +16,15 @@ export const getTopics=()=>{
         return response.data;
     })
 }
+
+export const getArticleById=(id)=>{
+    return newsApi.get(`/articles/${id}`).then((response)=>{
+        return response.data.article;
+    })
+}
+
+export const getArticleComments=(id)=>{
+    return newsApi.get(`/articles/${id}/comments`).then((response)=>{
+        return response.data;
+    })
+}
