@@ -41,3 +41,9 @@ export const postNewComments=(id, comment)=>{
         return response.data;
     })
 }
+
+export const deleteComments=(id)=>{
+    return newsApi.delete(`/comments/${id}`).then((response)=>{
+        return response.data;
+    })
+}
