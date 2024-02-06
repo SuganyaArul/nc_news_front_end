@@ -35,3 +35,9 @@ export const patchVotesForArticle=(id , vote)=>{
         return response.data.article;
     })
 }
+
+export const postNewComments=(id, comment)=>{
+    return newsApi.post(`/articles/${id}/comments`,comment).then((response)=>{
+        return response.data;
+    })
+}

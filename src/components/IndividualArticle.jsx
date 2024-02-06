@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
-import { getArticleById , getArticleComments, patchVotesForArticle} from "../utils/api";
+import { getArticleById , getArticleComments, patchVotesForArticle, postNewComments} from "../utils/api";
 import {useParams} from "react-router-dom"
 import CommentCard from "./CommentCard";
+import { useContext } from "react"
+import UserContext from "../contexts/UserContext"
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 export default function IndividualArticle({article, setArticles}){
+    const loggedInUser = useContext(UserContext)
     const [isOpen,setIsOpen] = useState(false)
     const [comments,setComments] = useState([])
+    const [newComment,setNewComment] = useState('')
     const [error, setError] =useState('')
+    const [noContentStatus,setNoContentStatus]=useState(false)
+    const [postStatus , setPostStatus] = useState(false)
     const {article_id}=useParams()
     useEffect(()=>{
         getArticleById(article_id).then((body)=>{
@@ -31,6 +39,28 @@ export default function IndividualArticle({article, setArticles}){
         .catch((error)=>{
             setError(error.msg)
         })
+    }
+    function handleNewComments(e){
+        e.preventDefault()
+        if(newComment === ''){
+            setNoContentStatus(true)
+        }
+        else{
+            setNoContentStatus(false)
+        const addComment={
+            'body': newComment,
+            'username':loggedInUser.username,
+        }
+        postNewComments(article_id , addComment).then((body)=>{
+            setNewComment('')
+            getArticleComments(article_id).then((body)=>{
+                setComments(body)
+            })
+            setPostStatus(true)
+        }).catch((error)=>{
+            console.log(error);
+        })
+    }
     }
     return (
         <>
@@ -59,11 +89,23 @@ export default function IndividualArticle({article, setArticles}){
                 </div>
             ):null
         }
+        <form onSubmit={handleNewComments}>
         <div>
             <p>Add New Comments Here</p>
-            <input type="text" className="new-comment"/>
+            <input type="text" className="new-comment" value={newComment} onChange={(e)=>{setNewComment(e.target.value)}} required/>
             <button>Add Comment</button>
         </div>
+        </form>
+        
+{postStatus?
+        <div className='popup'>
+        <div className='popup-inner'>
+        <h2>Comments Submitted Successfully</h2>
+        <button onClick={()=>{setPostStatus(false)
+        }}>OK</button>
+        </div>
+    </div> :null
+}
         </>
     )
 }
