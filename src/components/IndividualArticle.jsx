@@ -14,15 +14,19 @@ export default function IndividualArticle({article, setArticles}){
     const [newComment,setNewComment] = useState('')
     const [error, setError] =useState('')
     const [pointer , setPointer]=useState('button');
+    const [divPointer, setDivPointer] =useState('button');
     const [noContentStatus,setNoContentStatus]=useState(false)
     const [postStatus , setPostStatus] = useState(false)
     const {article_id}=useParams()
+
+    const [isLoading,setIsLoading] =useState(true)
     useEffect(()=>{
         getArticleById(article_id).then((body)=>{
             setArticles(body)
         })
         getArticleComments(article_id).then((body)=>{
             setComments(body)
+            setIsLoading(false)
         })
     },[])
     function handleComments(){
@@ -36,6 +40,7 @@ export default function IndividualArticle({article, setArticles}){
         newVote = -1;
         patchVotesForArticle(article_id , newVote).then((body)=>{
             setArticles(body)
+            setPointer('pointer')
         })
         .catch((error)=>{
             setError(error.msg)
@@ -65,7 +70,9 @@ export default function IndividualArticle({article, setArticles}){
     }
     return (
         <>
-        <li className="article" key={article.article_id}>
+        {isLoading?
+        <div>Loading Article Page. Please Wait....</div>:
+        (<li className="article" key={article.article_id}>
             <img src={article.article_img_url} alt="Images for this article"/>
             <span>
             <p>Title: {article.title}</p>
@@ -73,18 +80,19 @@ export default function IndividualArticle({article, setArticles}){
             <p>Author: {article.author}</p>
             <p>Votes: {article.votes} 
             {error!==''?(<div>Error: {error}</div>) :
-            (<><button onClick={handleVotes} name="like">like</button>
-            <button onClick={handleVotes} name="dislike">dislike</button></>)}
+            (<><button onClick={handleVotes} name="like" className={pointer}>like</button>
+            <button onClick={handleVotes} name="dislike" className={pointer}>dislike</button></>)}
             </p>
             <button onClick={handleComments}>{isOpen?'Hide ':'Show ' }Comments</button>
             </span>
-        </li>
+        </li>)
+}
         {
             isOpen?(
-                <div className={pointer}>
+                <div className={divPointer}>
                    { 
                    comments.comments.map((comment)=>{
-                        return <CommentCard comment={comment} setPointer={setPointer}/>
+                        return <CommentCard key={comment.comment_id} comment={comment} setComments={setComments} article_id={article_id} setDivPointer={setDivPointer}/>
                    })
                    }
                 </div>

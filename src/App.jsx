@@ -18,10 +18,14 @@ function App() {
   })
 
   useEffect(()=>{
-    getArticles(query).then((body)=>{
+     getArticles(query)      
+    .then((body)=>{
       setArticles(body)
     })
-    getTopics().then((body)=>{
+    .then(()=>{
+    return getTopics()
+    })
+    .then((body)=>{
       setTopics(body)
   }).catch((err)=>{
       console.log(err,'err');
@@ -32,7 +36,7 @@ function App() {
     <UserContext.Provider value={loggedInUser}>
     <Header topics={topics} setQuery={setQuery}/>
       <Routes>
-        <Route path='/' element={<Home articles={articles} setQuery={setQuery}/>}></Route>
+        <Route path='/' element={<Home articles={articles} setArticles={setArticles}/>}></Route>
         <Route path='/articles' element={<ArticlesList articles={articles} setArticles={setArticles}/>}></Route>
         <Route path='/articles/:article_id' element={<IndividualArticle article={articles} setArticles={setArticles}/>}></Route>
       </Routes>
