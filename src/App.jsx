@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import ArticlesList from "./components/ArticlesList"
 import { getArticles , getTopics} from "./utils/api"
 import Header from "./components/Header"
-
+import IndividualArticle from "./components/IndividualArticle"
 
 function App() {
   const [query,setQuery] =useState('')
@@ -33,7 +33,8 @@ function App() {
     <Header topics={topics} setQuery={setQuery}/>
       <Routes>
         <Route path='/' element={<Home articles={articles} setQuery={setQuery}/>}></Route>
-        <Route path='/articles' element={<ArticlesList articles={articles}/>}></Route>
+        <Route path='/articles' element={<ArticlesList articles={articles} setArticles={setArticles}/>}></Route>
+        <Route path='/articles/:article_id' element={<IndividualArticle article={articles} setArticles={setArticles}/>}></Route>
       </Routes>
     </UserContext.Provider>
     </div>
