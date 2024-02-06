@@ -92,7 +92,7 @@ export default function IndividualArticle({article, setArticles}){
                 <div className={divPointer}>
                    { 
                    comments.comments.map((comment)=>{
-                        return <CommentCard key={comment.comment_id} comment={comment} setDivPointer={setDivPointer}/>
+                        return <CommentCard key={comment.comment_id} comment={comment} setComments={setComments} article_id={article_id} setDivPointer={setDivPointer}/>
                    })
                    }
                 </div>
