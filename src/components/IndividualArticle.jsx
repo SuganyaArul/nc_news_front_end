@@ -13,6 +13,7 @@ export default function IndividualArticle({article, setArticles}){
     const [comments,setComments] = useState([])
     const [newComment,setNewComment] = useState('')
     const [error, setError] =useState('')
+    const [pointer , setPointer]=useState('button');
     const [noContentStatus,setNoContentStatus]=useState(false)
     const [postStatus , setPostStatus] = useState(false)
     const {article_id}=useParams()
@@ -64,7 +65,7 @@ export default function IndividualArticle({article, setArticles}){
     }
     return (
         <>
-        <li className="article">
+        <li className="article" key={article.article_id}>
             <img src={article.article_img_url} alt="Images for this article"/>
             <span>
             <p>Title: {article.title}</p>
@@ -80,10 +81,10 @@ export default function IndividualArticle({article, setArticles}){
         </li>
         {
             isOpen?(
-                <div>
+                <div className={pointer}>
                    { 
                    comments.comments.map((comment)=>{
-                        return <CommentCard comment={comment}/>
+                        return <CommentCard comment={comment} setPointer={setPointer}/>
                    })
                    }
                 </div>
