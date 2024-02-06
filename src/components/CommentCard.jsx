@@ -3,14 +3,14 @@ import UserContext from "../contexts/UserContext"
 import { deleteComments } from "../utils/api";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-export default function CommentCard({comment,setPointer}){
+export default function CommentCard({comment,setDivPointer}){
     const loggedInUser = useContext(UserContext)
     const [deleteStatus, setDeleteStatus] = useState(false)
     function handleDelete(e){
         const id=e.target.name;
-        setPointer('pointer')
+        setDivPointer('pointer')
         deleteComments(id).then(()=>{
-            setPointer('button')
+            setDivPointer('button')
             setDeleteStatus(true)
         })
     }

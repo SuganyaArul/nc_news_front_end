@@ -9,6 +9,8 @@ export default function ArticlesList({articles,setArticles}){
         if(topic!==undefined ){
         getArticles(topic).then((body)=>{
             setArticles(body)
+        }).catch((error)=>{
+            console.log(error.message);
         })
     }
 },[])
@@ -18,7 +20,7 @@ export default function ArticlesList({articles,setArticles}){
             articles.articles.map((article)=>{
               return  <Article key={article.article_id} article={article}/>
             })
-        ):null}
+        ):<p>No Articles to show now.</p>}
         </ol>
     )
 
