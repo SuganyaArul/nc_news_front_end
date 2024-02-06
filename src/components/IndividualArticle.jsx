@@ -29,7 +29,7 @@ export default function IndividualArticle({article, setArticles}){
             setArticles(body)
         })
         .catch((error)=>{
-            setError(error)
+            setError(error.msg)
         })
     }
     return (
