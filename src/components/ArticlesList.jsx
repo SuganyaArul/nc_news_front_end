@@ -7,9 +7,7 @@ export default function ArticlesList({articles,setArticles}){
     const topic=searchParams.get('topic')
     useEffect(()=>{
         if(topic!==undefined ){
-            console.log(topic);
         getArticles(topic).then((body)=>{
-            console.log(body,'response');
             setArticles(body)
         })
     }

@@ -9,7 +9,6 @@ export default function IndividualArticle({article, setArticles}){
     const {article_id}=useParams()
     useEffect(()=>{
         getArticleById(article_id).then((body)=>{
-            console.log(body);
             setArticles(body)
         })
         getArticleComments(article_id).then((body)=>{
@@ -44,7 +43,7 @@ export default function IndividualArticle({article, setArticles}){
         }
         <div>
             <p>Add New Comments Here</p>
-            <input type="text"/>
+            <input type="text" className="new-comment"/>
             <button>Add Comment</button>
         </div>
         </>
