@@ -28,3 +28,10 @@ export const getArticleComments=(id)=>{
         return response.data;
     })
 }
+
+export const patchVotesForArticle=(id , vote)=>{
+    const newVote={inc_votes :vote}
+    return newsApi.patch(`/articles/${id}`,newVote).then((response)=>{
+        return response.data.article;
+    })
+}
