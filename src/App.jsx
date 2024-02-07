@@ -26,10 +26,13 @@ function App() {
       console.log(err,'err');
   })
   },[])
-  function handleSort(value){
+  function handleSort(value,topic){
     const newValue=value.split('-')
     const sort=newValue[0];
     const order=newValue[1]
+    if(topic!==null)
+    navigate(`/articles?topic=${topic}&sort_by=${sort}&order=${order}`)
+    else
     navigate(`/articles?sort_by=${sort}&order=${order}`)
   }
   return (

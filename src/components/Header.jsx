@@ -1,8 +1,10 @@
 import { useContext } from "react"
 import UserContext from "../contexts/UserContext"
-import { Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 export default function Header({topics,setQuery,handleSort}){
+    const [searchParams]=useSearchParams()
     const loggedInUser = useContext(UserContext)
+    const topic=searchParams.get('topic')
     function handleEvent(e){
         if(e.target.name==='article')
         setQuery('');
@@ -26,7 +28,7 @@ export default function Header({topics,setQuery,handleSort}){
             <div>
                 <p>Sort: </p>
                 <select onChange={(e)=>{     
-                    handleSort(e.target.value)}}>
+                    handleSort(e.target.value,topic)}}>
                     <option value='created_at-desc'>Newest Date</option>
                     <option value='created_at-asc'>Oldest Date</option>
                     <option value='comment_count-desc'>Highest Comment_count</option>
