@@ -6,13 +6,15 @@ import { useContext } from "react"
 import UserContext from "../contexts/UserContext"
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import Error from "./Error";
 
 export default function IndividualArticle({article, setArticles}){
     const loggedInUser = useContext(UserContext)
     const [isOpen,setIsOpen] = useState(false)
     const [comments,setComments] = useState([])
     const [newComment,setNewComment] = useState('')
-    const [error, setError] =useState('')
+    const [error, setError] =useState(null)
+    const [likeError, setLikeError] = useState('')
     const [pointer , setPointer]=useState('button');
     const [divPointer, setDivPointer] =useState('button');
     const [noContentStatus,setNoContentStatus]=useState(false)
@@ -24,9 +26,17 @@ export default function IndividualArticle({article, setArticles}){
         getArticleById(article_id).then((body)=>{
             setArticles(body)
         })
-        getArticleComments(article_id).then((body)=>{
+        .then(()=>{
+        return getArticleComments(article_id)
+        })
+        .then((body)=>{
             setComments(body)
             setIsLoading(false)
+            setError(null)
+        })
+        .catch((err)=>{
+            setIsLoading(false)
+            setError(err.message)
         })
     },[])
     function handleComments(){
@@ -43,7 +53,7 @@ export default function IndividualArticle({article, setArticles}){
             setPointer('pointer')
         })
         .catch((error)=>{
-            setError(error.msg)
+            setLikeError(error.message)
         })
     }
     function handleNewComments(e){
@@ -64,36 +74,36 @@ export default function IndividualArticle({article, setArticles}){
             })
             setPostStatus(true)
         }).catch((error)=>{
-            console.log(error);
+            setError(error);
         })
     }
     }
+    if(isLoading) return <div>Loading Article Page. Please Wait....</div>
+    if(error!==null) return <Error error={error}/>
     return (
         <>
-        {isLoading?
-        <div>Loading Article Page. Please Wait....</div>:
-        (<li className="article" key={article.article_id}>
+        <li className="article" key={article.article_id}>
             <img src={article.article_img_url} alt="Images for this article"/>
             <span>
             <p>Title: {article.title}</p>
             <p>Topic: {article.topic}</p>
             <p>Author: {article.author}</p>
             <p>Votes: {article.votes} 
-            {error!==''?(<div>Error: {error}</div>) :
+            {likeError!==''?(<div>Error: {likeError}</div>) :
             (<><button onClick={handleVotes} name="like" className={pointer}>like</button>
             <button onClick={handleVotes} name="dislike" className={pointer}>dislike</button></>)}
             </p>
             <button onClick={handleComments}>{isOpen?'Hide ':'Show ' }Comments</button>
             </span>
-        </li>)
-}
+        </li>
+
         {
             isOpen?(
                 <div className={divPointer}>
-                   { 
+                   { comments.length!==0?
                    comments.comments.map((comment)=>{
                         return <CommentCard key={comment.comment_id} comment={comment} setComments={setComments} article_id={article_id} setDivPointer={setDivPointer}/>
-                   })
+                   }):<p>No Comments to show...</p>
                    }
                 </div>
             ):null
