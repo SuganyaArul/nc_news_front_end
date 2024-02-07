@@ -1,10 +1,12 @@
 import axios from "axios";
 
 const newsApi = axios.create({baseURL : "https://first-project-svt2.onrender.com/api"})
-export const getArticles=(query)=>{
+export const getArticles=(query,sortby,order)=>{
     return newsApi.get('/articles',{
         params:{
-            topic:query
+            topic:query,
+            sort_by:sortby,
+            order:order
         }
     }).then((response)=>{
         return response.data;

@@ -1,8 +1,10 @@
 import { useContext } from "react"
 import UserContext from "../contexts/UserContext"
-import { Link } from "react-router-dom"
-export default function Header({topics,setQuery}){
+import { Link, useSearchParams } from "react-router-dom"
+export default function Header({topics,setQuery,handleSort}){
+    const [searchParams]=useSearchParams()
     const loggedInUser = useContext(UserContext)
+    const topic=searchParams.get('topic')
     function handleEvent(e){
         if(e.target.name==='article')
         setQuery('');
@@ -22,6 +24,18 @@ export default function Header({topics,setQuery}){
                     return <Link key={topic.slug} name={topic.slug} to={{pathname:'/articles',search:`?topic=${topic.slug}`}} onClick={handleEvent} className="head-link">{topic.slug}</Link>
                 })):null
                 }
+            </div>
+            <div>
+                <p>Sort: </p>
+                <select onChange={(e)=>{     
+                    handleSort(e.target.value,topic)}}>
+                    <option value='created_at-desc'>Newest Date</option>
+                    <option value='created_at-asc'>Oldest Date</option>
+                    <option value='comment_count-desc'>Highest Comment_count</option>
+                    <option value='comment_count-asc'>Lowest Comment_count</option>
+                    <option value='votes-desc'>Highest Votes</option>
+                    <option value='votes-asc'>Lowest Votes</option>
+                </select>
             </div>
         </header>
     )
