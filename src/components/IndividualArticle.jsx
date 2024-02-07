@@ -110,7 +110,7 @@ export default function IndividualArticle({article, setArticles}){
         }
         <form onSubmit={handleNewComments}>
         <div>
-            <p>Add New Comments Here</p>
+            <h4>Add New Comments Here</h4>
             <input type="text" className="new-comment" value={newComment} onChange={(e)=>{setNewComment(e.target.value)}} required/>
             <button>Add Comment</button>
         </div>

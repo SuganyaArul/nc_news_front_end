@@ -18,15 +18,14 @@ export default function Header({topics,setQuery,handleSort}){
                 <p>User: {loggedInUser.username}</p>
                 <img src={loggedInUser.avatar_url}/>
             </div>
-            <div>
+            <div className="sort">
                 <Link to='/' onClick={handleEvent} name='article' className="head-link">Articles</Link>
                 {topics.length!==0?(topics.topics.map((topic)=>{
                     return <Link key={topic.slug} name={topic.slug} to={{pathname:'/articles',search:`?topic=${topic.slug}`}} onClick={handleEvent} className="head-link">{topic.slug}</Link>
                 })):null
                 }
-            </div>
-            <div>
-                <p>Sort: </p>
+            
+                <label>  Sort: </label>
                 <select onChange={(e)=>{     
                     handleSort(e.target.value,topic)}}>
                     <option value='created_at-desc'>Newest Date</option>
