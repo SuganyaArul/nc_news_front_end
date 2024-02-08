@@ -13,7 +13,7 @@ export default function Header({topics,setQuery,handleSort}){
     }
     return (
         <header className="head">
-            <h1>NC NEWS</h1>
+            <h1><img src="../Articles-logos_transparent.png" alt='logo' className="logo"/>NC NEWS</h1>
             <div className="user">
                 <p>User: {loggedInUser.username}</p>
                 <img src={loggedInUser.avatar_url}/>
