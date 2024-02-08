@@ -11,6 +11,7 @@ export default function Article({article}){
             <p>Topic: {article.topic}</p>
             <p>Author: {article.author}</p>
             <p>Votes: {article.votes}</p>
+            <p>Comment Counts: {article.comment_count}</p>
             </span>
         </li>
     )

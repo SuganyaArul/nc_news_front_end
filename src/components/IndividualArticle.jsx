@@ -100,10 +100,10 @@ export default function IndividualArticle({article, setArticles}){
         {
             isOpen?(
                 <div className={divPointer}>
-                   { comments.length!==0?
-                   comments.comments.map((comment)=>{
+                   { comments.comments.length!==0?
+                   (comments.comments.map((comment)=>{
                         return <CommentCard key={comment.comment_id} comment={comment} setComments={setComments} article_id={article_id} setDivPointer={setDivPointer}/>
-                   }):<p>No Comments to show...</p>
+                   })):<div className="error"><p>No Comments to show...</p></div>
                    }
                 </div>
             ):null

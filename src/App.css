@@ -10,7 +10,9 @@
 }
 
 .head h1{
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .article{
@@ -157,3 +159,9 @@
     .button{
         margin:5px;
     }
+
+.logo{
+    height: 100px;
+    width:100px;
+    /* display: inline-block; */
+}
