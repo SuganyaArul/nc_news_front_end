@@ -16,13 +16,14 @@
 }
 
 .article{
-    border:1px solid rgb(218, 38, 38);
+    border:1px solid rgb(222, 26, 26);
     border-radius: 15px;
     padding: 1rem;
     margin:1rem;
     width:80%;
     display: grid;
-    grid-template-columns: repeat(2,40%);  
+    grid-template-columns: repeat(2,40%); 
+    background-color: rgb(242, 188, 62); /*rgb(239, 182, 51)*/
 }
 
 .article img{
@@ -56,6 +57,9 @@
 .App{
     background-color: lemonchiffon;/*rgb(179, 222, 127);*/
     border-radius: 15px;
+}
+body{
+    background-color: lemonchiffon;
 }
 .comment{
     border:1px solid red;
