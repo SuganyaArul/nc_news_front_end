@@ -78,7 +78,7 @@ export default function IndividualArticle({article, setArticles}){
         })
     }
     }
-    if(isLoading) return <div>Loading Article Page. Please Wait....</div>
+    if(isLoading) return <div>🌐🌐🌐Loading Article Page. Please Wait....</div>
     if(error!==null) return <Error error={error}/>
     return (
         <>
@@ -90,8 +90,8 @@ export default function IndividualArticle({article, setArticles}){
             <p>Author: {article.author}</p>
             <p>Votes: {article.votes} 
             {likeError!==''?(<div>Error: {likeError}</div>) :
-            (<><button onClick={handleVotes} name="like" className={pointer}>like</button>
-            <button onClick={handleVotes} name="dislike" className={pointer}>dislike</button></>)}
+            (<><button onClick={handleVotes} name="like" className={pointer}>like👍</button>
+            <button onClick={handleVotes} name="dislike" className={pointer}>dislike👎</button></>)}
             </p>
             <button onClick={handleComments}>{isOpen?'Hide ':'Show ' }Comments</button>
             </span>

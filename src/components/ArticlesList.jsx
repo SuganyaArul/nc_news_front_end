@@ -21,7 +21,7 @@ export default function ArticlesList({articles,setArticles}){
         })
     
 },[topic, sort_by,order])
-    if(isLoading) return <p>Loading Articles. Please wait</p>
+    if(isLoading) return <p>🌐🌐🌐Loading Articles. Please wait</p>
     if(error!=null) return <Error error={error} />
     return(
         <>
