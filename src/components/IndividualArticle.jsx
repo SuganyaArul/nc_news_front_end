@@ -16,6 +16,8 @@ export default function IndividualArticle({article, setArticles}){
     const [error, setError] =useState(null)
     const [likeError, setLikeError] = useState('')
     const [pointer , setPointer]=useState('button');
+    const [likePointer , setLikePointer]=useState('normal');
+    const [dislikePointer , setDislikePointer]=useState('normal');
     const [divPointer, setDivPointer] =useState('button');
     const [noContentStatus,setNoContentStatus]=useState(false)
     const [postStatus , setPostStatus] = useState(false)
@@ -42,12 +44,23 @@ export default function IndividualArticle({article, setArticles}){
     function handleComments(){
         setIsOpen(!isOpen)
     }
+    //this function will be triggered when user do like or dislike articles
     function handleVotes(e){
         let newVote;
-        if(e.target.name==='like')
+        if((e.target.name==='like' && likePointer==='normal') || (e.target.name==='dislike' && dislikePointer==='highlighted')){
         newVote =1;
+        if(e.target.name==='like')
+        setLikePointer('highlighted')
         else
+        setDislikePointer('normal')
+        }
+        else{
         newVote = -1;
+        if(e.target.name==='dislike')
+        setDislikePointer('highlighted')
+        else
+        setLikePointer('normal')
+        }
         patchVotesForArticle(article_id , newVote).then((body)=>{
             setArticles(body)
             setPointer('pointer')
@@ -56,6 +69,7 @@ export default function IndividualArticle({article, setArticles}){
             setLikeError(error.message)
         })
     }
+    //this function to add new comments for the article
     function handleNewComments(e){
         e.preventDefault()
         if(newComment === ''){
@@ -90,8 +104,8 @@ export default function IndividualArticle({article, setArticles}){
             <p>Author: {article.author}</p>
             <p>Votes: {article.votes} 
             {likeError!==''?(<div>Error: {likeError}</div>) :
-            (<><button onClick={handleVotes} name="like" className={pointer}>like👍</button>
-            <button onClick={handleVotes} name="dislike" className={pointer}>dislike👎</button></>)}
+            (<><button onClick={handleVotes} name="like" className={likePointer}>like👍</button>
+            <button onClick={handleVotes} name="dislike" className={dislikePointer}>dislike👎</button></>)}
             </p>
             <button onClick={handleComments}>{isOpen?'Hide ':'Show ' }Comments</button>
             </span>
