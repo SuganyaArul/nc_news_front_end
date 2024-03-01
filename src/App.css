@@ -1,6 +1,12 @@
 .user{
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+}
+
+.users img{
+    height:150px;
+    width:150px;
 }
 
 .user img{

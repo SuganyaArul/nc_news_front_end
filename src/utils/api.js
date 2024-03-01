@@ -49,3 +49,9 @@ export const deleteComments=(id)=>{
         return response.data;
     })
 }
+
+export const getUsers=()=>{
+    return newsApi.get(`/users`).then((response)=>{
+        return response.data;
+    })
+}

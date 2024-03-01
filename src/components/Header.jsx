@@ -3,7 +3,7 @@ import UserContext from "../contexts/UserContext"
 import { Link, useSearchParams } from "react-router-dom"
 export default function Header({topics,setQuery,handleSort}){
     const [searchParams]=useSearchParams()
-    const loggedInUser = useContext(UserContext)
+    const {loggedInUser} = useContext(UserContext)
     const topic=searchParams.get('topic')
     function handleEvent(e){
         if(e.target.name==='article')
@@ -15,7 +15,8 @@ export default function Header({topics,setQuery,handleSort}){
         <header className="head">
             <h1><img src="/../Articles-logos_transparent.png" alt='logo' className="logo"/>NC NEWS</h1>
             <div className="user">
-                <p>User: {loggedInUser.username}</p>
+                <Link to='/changeUser'>Change User</Link>
+                <p> {loggedInUser.username}</p>
                 <img src={loggedInUser.avatar_url}/>
             </div>
             <div className="sort">

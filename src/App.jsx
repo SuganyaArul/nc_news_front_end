@@ -6,6 +6,7 @@ import ArticlesList from "./components/ArticlesList"
 import { getArticles , getTopics} from "./utils/api"
 import Header from "./components/Header"
 import IndividualArticle from "./components/IndividualArticle"
+import Users from "./components/Users"
 
 function App() {
   const [query,setQuery] =useState('')
@@ -37,10 +38,11 @@ function App() {
   }
   return (
     <div className="App">
-    <UserContext.Provider value={loggedInUser}>
+    <UserContext.Provider value={{loggedInUser,setLoggedInUser}}>
     <Header topics={topics} setQuery={setQuery} handleSort={handleSort}/>
       <Routes>
         <Route path='/' element={<Home articles={articles} setArticles={setArticles}/>}></Route>
+        <Route path='/changeUser' element={<Users/>}></Route>
         <Route path='/articles' element={<ArticlesList articles={articles} setArticles={setArticles}/>}></Route>
         <Route path='/articles/:article_id' element={<IndividualArticle article={articles} setArticles={setArticles}/>}></Route>
       </Routes>
